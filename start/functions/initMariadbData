@@ -1,0 +1,5 @@
+initMariadbData(){
+   local IFS=$(echo -en "")
+   local config="$(configFromVarGroup param)"
+   /usr/bin/mysql_install_db $config
+}
