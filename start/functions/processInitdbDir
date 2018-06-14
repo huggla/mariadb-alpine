@@ -27,6 +27,7 @@ processInitdbDir(){
       set -- "/initdb/"*
    done
    set -f
-   /usr/bin/mysqld --user=$VAR_LINUX_USER --bootstrap --init-file=$initFile
+   cat $initFile
+   runCmd "/usr/bin/mysqld --user=$VAR_LINUX_USER --bootstrap --init-file=$initFile"
    rm -f $initFile
 }
