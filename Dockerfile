@@ -1,5 +1,5 @@
 FROM huggla/mariadb as mariadb
-FROM huggla/alpine:edge
+FROM huggla/alpine:20180614-edge
 
 USER root
 
