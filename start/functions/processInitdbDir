@@ -1,0 +1,30 @@
+processInitdbDir(){
+   local initFile="$1"
+   local filename=""
+   local dbname=""
+   local -
+   set +f
+   set -- "/initdb/"*
+   while [ -f "$1" ]
+   do
+      filename="$(/usr/bin/basename "$1")"
+      dbname=${filename%.*}
+      dbname=${dbname#*.}
+      case "$1" in
+         *.sh)     echo "Running $1"
+                   . "$1"
+                   ;;
+         *.sql)    echo "Appending $1 to init file"
+                   /bin/cat "$1" >> "$initFile"
+                   ;;
+         *.sql.gz) echo "Appending $1 to init file"
+                   runCmd "/bin/gunzip -c \"$1\" >> "$initFile"
+                   ;;
+         *)        echo "Ignoring $1"
+                   ;;
+      esac
+      /bin/rm -f "$1"
+      set -- "/initdb/"*
+   done
+   set -f
+}
