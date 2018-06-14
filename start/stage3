@@ -11,7 +11,7 @@ if [ "$isFirstRun" == "true" ]
 then
    if [ ! -s "$VAR_param_datadir/mysql" ]
    then
-      /usr/bin/mysql_install_db $extraConfig
+      runCmd "/usr/bin/mysql_install_db $extraConfig"
       processInitdbDir
    fi
    tryDelete /initdb
