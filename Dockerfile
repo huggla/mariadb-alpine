@@ -6,9 +6,7 @@ USER root
 COPY --from=mariadb /mariadb-apks /mariadb-apks
 COPY ./start /start
 
-RUN cd /mariadb-apks \
- && apk update \
- && apk --allow-untrusted add ./*.apk
+RUN apk --no-cache --allow-untrusted add /mariadb-apks/*.apk \
  && rm -rf /mariadb-apks \
  && ln /usr/bin/mysqld /usr/local/bin/mysqld
 
