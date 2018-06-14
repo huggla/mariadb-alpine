@@ -1,0 +1,12 @@
+initPgConfig(){
+   local extraConfigFile="$VAR_CONFIG_DIR/my.cnf"
+   if [ ! -s "$extraConfigFile" ]
+   then
+      configFromVarGroup param > "$extraConfigFile"
+   fi
+   local hbaFile="$(removeSingleQuotes "$VAR_param_hba_file")"
+   if [ ! -s "$hbaFile" ]
+   then
+      writeHbaFile
+   fi
+}
