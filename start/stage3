@@ -7,7 +7,7 @@
 
 if [ "$isFirstRun" == "true" ]
 then
-   if [ ! -s "$VAR_param_datadir" ]
+   if [ ! -s "$VAR_param_datadir/mysql" ]
    then
       initMariadbData
    fi
