@@ -1,5 +1,5 @@
 processInitdbDir(){
-   local initFile="$1"
+   local initFile="$(/bin/mktemp)"
    local filename=""
    local dbname=""
    local -
@@ -27,4 +27,6 @@ processInitdbDir(){
       set -- "/initdb/"*
    done
    set -f
+   /usr/bin/mysqld --user=$VAR_LINUX_USER --bootstrap --init-file=$initFile
+	rm -f $initFile
 }
