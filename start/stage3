@@ -7,10 +7,9 @@
 
 if [ "$isFirstRun" == "true" ]
 then
-   initMysqlConfig
-   if [ ! -s "$(removeSingleQuotes "$VAR_param_data_directory")/PG_VERSION" ]
+   if [ ! -s "$VAR_param_datadir" ]
    then
-      initPgData
+      initMariadbData
    fi
    tryDelete /initdb
 fi
