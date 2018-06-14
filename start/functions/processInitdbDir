@@ -18,7 +18,7 @@ processInitdbDir(){
                    /bin/cat "$1" >> "$initFile"
                    ;;
          *.sql.gz) echo "Appending $1 to init file"
-                   runCmd "/bin/gunzip -c \"$1\" >> "$initFile"
+                   runCmd "/bin/gunzip -c \"$1\" >> \"$initFile\""
                    ;;
          *)        echo "Ignoring $1"
                    ;;
@@ -28,5 +28,5 @@ processInitdbDir(){
    done
    set -f
    /usr/bin/mysqld --user=$VAR_LINUX_USER --bootstrap --init-file=$initFile
-	rm -f $initFile
+   rm -f $initFile
 }
