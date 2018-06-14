@@ -5,4 +5,5 @@ initMariadbData(){
    /usr/bin/mysql_install_db $config
    IFS=$IFS_bak
    processInitdbDir
+   echo $config
 }
