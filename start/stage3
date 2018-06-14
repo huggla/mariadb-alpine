@@ -6,7 +6,7 @@
 # All functions in /start/functions
 
 IFS=$(echo -en "")
-extraConfig="$(configFromVarGroup param)"
+extraConfig="--$(configFromVarGroup param)"
 if [ "$isFirstRun" == "true" ]
 then
    if [ ! -s "$VAR_param_datadir/mysql" ]
