@@ -1,9 +1,0 @@
-initMariadbData(){
-   local IFS_bak=$IFS
-   local IFS=$(echo -en "")
-   local config="$(configFromVarGroup param)"
-   /usr/bin/mysql_install_db $config
-   IFS=$IFS_bak
-   processInitdbDir
-   echo $config
-}
