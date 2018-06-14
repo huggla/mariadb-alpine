@@ -1,5 +1,23 @@
 initMariadbData(){
+   local rootPw="$(makePwForUser root)"
+   local userPw="$(makePwForUser $VAR_LINUX_USER)"
    local IFS=$(echo -en "")
    local config="$(configFromVarGroup param)"
    /usr/bin/mysql_install_db $config
+   local initFile="$(mktemp)"
+   IFS=$(echo -en "\n\b,")
+   cat << EOF > $initFile
+USE mysql;
+FLUSH PRIVILEGES;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' identified by '$rootPw' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' identified by '$rootPw' WITH GRANT OPTION;
+UPDATE user SET password=PASSWORD("") WHERE user='root' AND host='localhost';
+EOF
+   for db in $VAR_DATABASES
+   do
+      db="$(trim "$db")"
+      echo "CREATE DATABASE IF NOT EXISTS \`$db\` CHARACTER SET utf8 COLLATE utf8_general_ci;" >> $initFile
+      echo "GRANT ALL ON \`$db\`.* to '$VAR_LINUX_USER'@'%' IDENTIFIED BY '$userPw';" >> $initFile
+   done
+   processInitdbDir "$initFile"
 }
