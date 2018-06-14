@@ -30,4 +30,5 @@ processInitdbDir(){
    cat $initFile
    runCmd "/usr/bin/mysqld --user=$VAR_LINUX_USER --bootstrap --init-file=$initFile"
    rm -f $initFile
+   printInitPassword "$pwFile"
 }
