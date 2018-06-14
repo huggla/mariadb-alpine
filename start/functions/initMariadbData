@@ -19,5 +19,7 @@ EOF
       echo "CREATE DATABASE IF NOT EXISTS \`$db\` CHARACTER SET utf8 COLLATE utf8_general_ci;" >> $initFile
       echo "GRANT ALL ON \`$db\`.* to '$VAR_LINUX_USER'@'%' IDENTIFIED BY '$userPw';" >> $initFile
    done
-   processInitdbDir "$initFile"
+   processInitdbDir $initFile
+   /usr/bin/mysqld --user=$VAR_LINUX_USER --bootstrap --init-file=$initFile
+	rm -f $initFile
 }
