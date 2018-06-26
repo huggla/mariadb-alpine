@@ -11,7 +11,7 @@ RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common-10.3.7-r0.
  && ln /usr/bin/mysqld /usr/local/bin/mysqld
 
 ENV VAR_LINUX_USER="mysql" \
-    VAR_FINAL_COMMAND="/usr/local/bin/mysqld" \
+    VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
     VAR_param_datadir="/mariadbdata"
 
 USER starter
