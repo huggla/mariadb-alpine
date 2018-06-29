@@ -6,13 +6,13 @@ USER root
 COPY --from=mariadb /mariadb-apks /mariadb-apks
 
 RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common-10.3.7-r0.apk /mariadb-apks/mariadb-10.3.7-r0.apk \
- && rm -rf /mariadb-apks
+ && tar -zcpf /mariadb.tar.gz $(apk manifest mariadb mariadb-common | awk -F "  " '{print $2;}')
 
-FROM huggla/backup-alpine
+FROM huggla/alpine:20180628-edge
 
 USER root
 
-COPY --from=tmp /usr/bin /usr/bin
+COPY --from=tmp /mariadb.tar.gz /mariadb.tar.gz
 COPY ./start /start
 COPY ./bin /usr/local/bin
 
