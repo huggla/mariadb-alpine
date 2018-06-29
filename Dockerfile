@@ -20,7 +20,6 @@ COPY ./start /start
 COPY ./initdb /initdb 
 
 RUN apk --no-cache add libressl2.7-libcrypto libressl2.7-libssl \
- && tar -zxpf /mariadb.tar.gz -C / \
  && ln /usr/bin/mysqld /usr/local/bin/mysqld
 
 ENV VAR_LINUX_USER="mysql" \
