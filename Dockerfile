@@ -7,19 +7,20 @@ COPY --from=mariadb /mariadb-apks/mariadb-common-10.3.7-r0.apk /mariadb-apks/mar
 COPY --from=mariadb /mariadb-apks/mariadb-10.3.7-r0.apk /mariadb-apks/mariadb-10.3.7-r0.apk
 
 RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common-10.3.7-r0.apk /mariadb-apks/mariadb-10.3.7-r0.apk \
- && tar -zcpf /mariadb.tar.gz $(apk manifest mariadb mariadb-common | awk -F "  " '{print $2;}')
+ && tar -zcpf /mariadb.tar.gz $(apk manifest mariadb mariadb-common | awk -F "  " '{print $2;}') \
+ && mkdir -p /tmp/root /
+ && tar -zxpf /mariadb.tar.gz -C /tmp/root/
 
 FROM huggla/alpine:20180628-edge
 
 USER root
 
-COPY --from=tmp /mariadb.tar.gz /mariadb.tar.gz
+COPY --from=tmp /tmp/root /
 COPY ./start /start
 COPY ./initdb /initdb 
 
 RUN apk --no-cache add libressl2.7-libcrypto libressl2.7-libssl \
  && tar -zxpf /mariadb.tar.gz -C / \
- && rm /mariadb.tar.gz \
  && ln /usr/bin/mysqld /usr/local/bin/mysqld
 
 ENV VAR_LINUX_USER="mysql" \
