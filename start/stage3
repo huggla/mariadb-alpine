@@ -12,7 +12,7 @@ then
    if [ ! -s "$VAR_param_datadir/mysql" ]
    then
       runCmd "/usr/bin/mysql_install_db $extraConfig"
-      /bin/chown $VAR_LINUX_USER "$VAR_param_datadir"
+      /bin/chown -R $VAR_LINUX_USER "$VAR_param_datadir"
       /bin/chmod -R ug=rwX,o= "$VAR_param_datadir"
       processInitdbDir
    fi
