@@ -17,6 +17,10 @@ RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common-10.3.7-r0.
 
 FROM huggla/alpine:20180628-edge
 
+USER root
+
+COPY --from=tmp /tmp/root /
+
 ENV VAR_LINUX_USER="mysql" \
     VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
     VAR_param_datadir="/mariadbdata"
