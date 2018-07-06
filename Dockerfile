@@ -13,7 +13,9 @@ RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common-10.3.7-r0.
  && tar -cpf /installed_files.tar $(apk manifest mariadb mariadb-common libressl2.7-libcrypto libressl2.7-libssl | awk -F "  " '{print $2;}') \
  && tar -xpf /installed_files.tar -C /tmp/root/ \
  && mkdir -p /tmp/root/usr/local/bin \
- && mv /tmp/root/usr/bin/mysqld /tmp/root/usr/local/bin/mysqld
+ && mv /tmp/root/usr/bin/mysqld /tmp/root/usr/local/bin/mysqld \
+ && cd /tmp/root/usr \
+ && ln -s local/bin/mysqld bin/mysqld
 
 FROM huggla/alpine:20180628-edge
 
