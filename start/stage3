@@ -8,7 +8,7 @@
 extraConfig="$(configFromVarGroup param | awk '{print "--"$0}')"
 if [ "$isFirstRun" == "true" ]
 then
-   makeDir "$VAR_param_socket"
+   tryMakeDir "$VAR_param_socket"
    if [ ! -s "$VAR_param_datadir/mysql" ]
    then
 #      runCmd "/usr/bin/mysql_install_db $extraConfig"
