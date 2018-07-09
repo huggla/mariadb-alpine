@@ -28,7 +28,7 @@ EOF
       echo "CREATE DATABASE IF NOT EXISTS \`$db\` CHARACTER SET utf8 COLLATE utf8_general_ci;" >> "$sqlFile"
       echo "GRANT ALL ON \`$db\`.* to '$VAR_LINUX_USER'@'%' IDENTIFIED BY '$userPw';" >> "$sqlFile"
    done
-   printInitPassword "$pwFile"
+   printInitPassword "$userPw"
 }
 
 initMysql
