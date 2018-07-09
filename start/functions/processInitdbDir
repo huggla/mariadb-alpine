@@ -26,7 +26,4 @@ processInitdbDir(){
       /bin/rm -f "$1"
       set -- "/initdb/"*
    done
-   set -f
-   runCmd "/usr/bin/mysql_install_db --user=$VAR_LINUX_USER --bootstrap --init-file=$initFile --datadir=$VAR_param_datadir"
-   tryDelete $initFile
 }
