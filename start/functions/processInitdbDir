@@ -1,5 +1,5 @@
 processInitdbDir(){
-   local initFile="$(/bin/mktemp)"
+   initFile="$(/bin/mktemp)"
    local filename=""
    local dbname=""
    local -
