@@ -5,7 +5,6 @@
 # VAR_*
 # All functions in /start/functions
 
-extraConfig="$(configFromVarGroup param | awk '{print "--"$0}')"
 if [ "$isFirstRun" == "true" ]
 then
    tryMakeFile "$VAR_param_socket" write
@@ -20,3 +19,9 @@ if [ "$(isInsecure)" == "true" ]
 then
    printSecurityWarning
 fi
+extraConfig="$(configFromVarGroup param | awk '{print "--"$0}')"
+if [ -n "$initFile" ]
+then
+   extraConfig="$extraConfig --bootstrap --init_file=$initFile
+fi
+   
