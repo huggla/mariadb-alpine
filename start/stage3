@@ -5,7 +5,7 @@
 # VAR_*
 # All functions in /start/functions
 
-IFS=$(echo -en "")
+#IFS=$(echo -en "")
 extraConfig="$(configFromVarGroup param | awk '{print "--"$0}')"
 if [ "$isFirstRun" == "true" ]
 then
