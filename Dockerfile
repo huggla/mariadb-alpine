@@ -25,6 +25,7 @@ COPY --from=tmp /tmp/root /
 
 ENV VAR_LINUX_USER="mysql" \
     VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
-    VAR_param_datadir="/mariadbdata"
+    VAR_param_datadir="/mariadbdata" \
+    VAR_param_socket="/run/mysqld/mysqld.sock"
 
 USER starter
