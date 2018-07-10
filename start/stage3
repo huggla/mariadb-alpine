@@ -20,7 +20,7 @@ then
    printSecurityWarning
 fi
 #IFS=$(echo -en "")
-extraConfig="$(configFromVarGroup param | awk '{print "--"$0}')"
+extraConfig="$(configFromVarGroup param noUnderscore2 | awk '{print "--"$0}')"
 if [ -n "$initFile" ]
 then
    /bin/chown $VAR_LINUX_USER $initFile
