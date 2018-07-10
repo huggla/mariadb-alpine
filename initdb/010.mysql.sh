@@ -28,7 +28,6 @@ EOF
       echo "CREATE DATABASE IF NOT EXISTS \`$db\` CHARACTER SET utf8 COLLATE utf8_general_ci;" >> "$sqlFile"
       echo "GRANT ALL ON \`$db\`.* to '$VAR_LINUX_USER'@'%' IDENTIFIED BY '$userPw';" >> "$sqlFile"
       echo "GRANT ALL ON \`$db\`.* to '$VAR_LINUX_USER'@'localhost' IDENTIFIED BY '$userPw';" >> "$sqlFile"
-      echo "UPDATE user SET password=PASSWORD(\"\") WHERE user='root' AND host='localhost';" >> "$sqlFile"
    done
    printInitPassword "$userPw"
 }
