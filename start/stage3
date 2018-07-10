@@ -24,6 +24,6 @@ extraConfig="$(configFromVarGroup param | awk '{print "--"$0}')"
 if [ -n "$initFile" ]
 then
    /bin/chown $VAR_LINUX_USER $initFile
-   extraConfig="$extraConfig --bootstrap --init-file=$initFile
+   extraConfig="$extraConfig --bootstrap --init-file=$initFile"
 fi
    
