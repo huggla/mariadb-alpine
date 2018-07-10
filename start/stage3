@@ -19,7 +19,7 @@ if [ "$(isInsecure)" == "true" ]
 then
    printSecurityWarning
 fi
-IFS=$(echo -en "")
+#IFS=$(echo -en "")
 extraConfig="$(configFromVarGroup param | awk '{print "--"$0}')"
 if [ -n "$initFile" ]
 then
