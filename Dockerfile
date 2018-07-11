@@ -7,7 +7,8 @@ COPY --from=mariadb /mariadb-apks /mariadb-apks
 COPY ./start /rootfs/start
 COPY ./initdb /rootfs/initdb 
 
-RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common-10.3.8-r0.apk /mariadb-apks/mariadb-10.3.8-r0.apk \
+RUN apk update \
+ && apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common-10.3.8-r0.apk /mariadb-apks/mariadb-10.3.8-r0.apk \
  && apk --no-cache add libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl \
  && tar -cpf /installed_files.tar $(apk manifest mariadb mariadb-common libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl | awk -F "  " '{print $2;}') \
  && tar -xpf /installed_files.tar -C /rootfs/ \
