@@ -3,8 +3,7 @@ FROM huggla/alpine as tmp
 
 USER root
 
-COPY --from=mariadb /mariadb-apks/mariadb-common-10.3.8-r0.apk /mariadb-apks/mariadb-common-10.3.8-r0.apk
-COPY --from=mariadb /mariadb-apks/mariadb-10.3.8-r0.apk /mariadb-apks/mariadb-10.3.8-r0.apk
+COPY --from=mariadb /mariadb-apks /mariadb-apks
 COPY ./start /rootfs/start
 COPY ./initdb /rootfs/initdb 
 
