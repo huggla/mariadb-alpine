@@ -1,15 +1,14 @@
-FROM huggla/mariadb as mariadb
-FROM huggla/alpine as tmp
+FROM huggla/mariadb as stage1
+FROM huggla/alpine as stage2
 
 USER root
 
-COPY --from=mariadb /mariadb-apks/mariadb-common-10.3.7-r0.apk /mariadb-apks/mariadb-common-10.3.7-r0.apk
-COPY --from=mariadb /mariadb-apks/mariadb-10.3.7-r0.apk /mariadb-apks/mariadb-10.3.7-r0.apk
-COPY --from=mariadb /mariadb-apks/mariadb-client-10.3.7-r0.apk /mariadb-apks/mariadb-client-10.3.7-r0.apk
-COPY ./start /rootfs/start
-COPY ./initdb /rootfs/initdb 
+COPY --from=stage1 /mariadb-apks/mariadb-common-10.3.7-r0.apk /mariadb-apks/mariadb-common-10.3.7-r0.apk
+COPY --from=stage1 /mariadb-apks/mariadb-10.3.7-r0.apk /mariadb-apks/mariadb-10.3.7-r0.apk
+COPY --from=stage1 /mariadb-apks/mariadb-client-10.3.7-r0.apk /mariadb-apks/mariadb-client-10.3.7-r0.apk
+COPY ./rootfs /rootfs
 
-RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common-10.3.7-r0.apk /mariadb-apks/mariadb-10.3.7-r0.apk /mariadb-apks/mariadb-client-10.3.7-r0.apk \
+RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common-10.3.8-r0.apk /mariadb-apks/mariadb-10.3.8-r0.apk /mariadb-apks/mariadb-client-10.3.7-r0.apk \
  && apk --no-cache add libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl \
  && tar -cpf /installed_files.tar $(apk manifest mariadb mariadb-common mariadb-client libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl | awk -F "  " '{print $2;}') \
  && tar -xpf /installed_files.tar -C /rootfs/ \
