@@ -1,11 +1,10 @@
-FROM huggla/mariadb as mariadb
-FROM huggla/alpine as tmp
+FROM huggla/mariadb as stage1
+FROM huggla/alpine as stage2
 
 USER root
 
-COPY --from=mariadb /mariadb-apks /mariadb-apks
-COPY ./start /rootfs/start
-COPY ./initdb /rootfs/initdb 
+COPY --from=stage1 /mariadb-apks /mariadb-apks
+COPY ./rootfs /rootfs 
 
 RUN apk update \
  && apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common-10.3.8-r0.apk /mariadb-apks/mariadb-10.3.8-r0.apk \
