@@ -23,6 +23,7 @@ processInitdbDir(){
          *)        echo "Ignoring $1"
                    ;;
       esac
+      echo
       /bin/rm -f "$1"
       set -- "/initdb/"*
    done
