@@ -29,7 +29,7 @@ EOF
       echo "GRANT ALL ON \`$db\`.* to '$VAR_LINUX_USER'@'%' IDENTIFIED BY '$userPw';" >> "$sqlFile"
       echo "GRANT ALL ON \`$db\`.* to '$VAR_LINUX_USER'@'localhost' IDENTIFIED BY '$userPw';" >> "$sqlFile"
    done
-   printInitPassword "$userPw"
+   printInitPassword root "$rootPw"
 }
 
 initMysql
