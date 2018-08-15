@@ -7,8 +7,8 @@ COPY --from=stage1 /mariadb-apks /mariadb-apks
 COPY ./rootfs /rootfs 
 
 RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common.apk /mariadb-apks/mariadb.apk /mariadb-apks/mariadb-client.apk \
- && apk --no-cache add libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl ncurses \
- && tar -cvp -f /installed_files.tar $(apk manifest mariadb mariadb-common mariadb-client ncurses libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl | awk -F "  " '{print $2;}') \
+ && apk --no-cache add libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl ncurses-libs \
+ && tar -cvp -f /installed_files.tar $(apk manifest mariadb mariadb-common mariadb-client ncurses-libs libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl | awk -F "  " '{print $2;}') \
  && tar -xvp -f /installed_files.tar -C /rootfs/ \
  && mkdir -p /rootfs/usr/local/bin \
  && mv /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
