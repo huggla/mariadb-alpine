@@ -1,11 +1,11 @@
 processInitdbDir(){
    initFile="$(/bin/mktemp)"
-   cp /initmysql/* /initdb/
+   cp /initdb/* /initmysql/
    local filename=""
    local dbname=""
    local -
    set +f
-   set -- "/initdb/"*
+   set -- "/initmysql/"*
    while [ -f "$1" ]
    do
       filename="$(/usr/bin/basename "$1")"
@@ -26,6 +26,6 @@ processInitdbDir(){
       esac
       echo
       /bin/rm -f "$1"
-      set -- "/initdb/"*
+      set -- "/initmysql/"*
    done
 }
