@@ -31,4 +31,5 @@ processInitdbDir(){
       /bin/rm -f "$1"
       set -- "/initmysql/"*
    done
+   echo "$initFile"
 }
