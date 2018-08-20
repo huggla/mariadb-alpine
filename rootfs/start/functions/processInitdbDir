@@ -1,5 +1,6 @@
 processInitdbDir(){
    initFile="$(/bin/mktemp)"
+   cp /initmysql/* /initdb/
    local filename=""
    local dbname=""
    local -
