@@ -10,7 +10,7 @@
 initMysql(){
    local prio="010"
    local dbname="mysql"
-   local sqlFile="/initdb/$prio.$dbname.sql"
+   local sqlFile="/initmysql/$prio.$dbname.sql"
    local rootPw="$(makePwForUser root)"
    local userPw="$(makePwForUser $VAR_LINUX_USER)"
    /bin/cat << EOF > "$sqlFile"
