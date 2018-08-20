@@ -1,6 +1,6 @@
 processInitdbDir(){
    initFile="$(/bin/mktemp)"
-   if [ ! -z "$(/bin/ls -A /initdb)" ]
+   if [ -d "/initdb" ] && [ ! -z "$(/bin/ls -A /initdb)" ]
    then
       cp /initdb/* /initmysql/
    fi
