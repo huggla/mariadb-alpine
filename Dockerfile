@@ -18,6 +18,7 @@ RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common.apk /maria
 FROM huggla/alpine:20180713-edge
 
 COPY --from=stage2 /rootfs /
+COPY ./rootfs/initdb /initdb
 
 ENV VAR_LINUX_USER="mysql" \
     VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
