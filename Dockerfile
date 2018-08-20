@@ -10,7 +10,7 @@ RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common.apk /maria
  && apk --no-cache add libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl ncurses-libs \
  && tar -cvp -f /installed_files.tar $(apk manifest mariadb mariadb-common mariadb-client mariadb-server-tools ncurses-libs libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl | awk -F "  " '{print $2;}') \
  && tar -xvp -f /installed_files.tar -C /rootfs/ \
- && mkdir -p /rootfs/usr/local/bin \
+ && mkdir -p /rootfs/usr/local/bin /rootfs/initdb \
  && mv /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
  && cd /rootfs/usr/bin \
  && ln -s ../local/bin/mysqld mysqld
