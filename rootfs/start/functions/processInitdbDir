@@ -1,5 +1,6 @@
 processInitdbDir(){
    initFile="/usr/share/mariadb/mysql_test_db.sql"
+   > "$initFile"
    /bin/chmod go= "$initFile"
    local filename=""
    local dbname=""
