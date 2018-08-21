@@ -8,8 +8,10 @@
 # ---------------------------------------------------------
 
 initMysql(){
+   local prio="010"
    local dbname="mysql"
-   local sqlFile="/usr/share/mariadb/mysql_test_db.sql"
+   local sqlFile="/initmysql/$prio.$dbname.sql"
+   /bin/touch "$sqlFile"
    /bin/chmod go= "$sqlFile"
    local rootPw="$(makePwForUser root)"
    local userPw="$(makePwForUser $VAR_LINUX_USER)"
