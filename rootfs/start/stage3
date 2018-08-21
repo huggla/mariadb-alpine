@@ -5,19 +5,17 @@
 # VAR_*
 # All functions in /start/functions
 
-extraConfig="$(configFromVarGroup param noUnderscore2 | awk '{print "--"$0}')"
-if [ -n "$initFile" ]
-then
-   /bin/chown $VAR_LINUX_USER $initFile
-   extraConfig="$extraConfig --verbose --init-file=$initFile"
-fi
+extraConfig="$(configFromVarGroup param noUnderscore2 | awk '{print "--"$0}') --user=$VAR_LINUX_USER"
+
 if [ "$isFirstRun" == "true" ]
 then
    tryMakeFile "$VAR_param_socket" write
    if [ ! -s "$VAR_param_datadir/mysql" ]
    then
-      runCmd "/usr/bin/mysql_install_db $extraConfig --user=$VAR_LINUX_USER --skip-test-db"
       processInitdbDir
+      extraConfig="$extraConfig --bootstrap"
+      bootstrapFiles="/usr/share/mariadb/mysql_system_tables.sql /usr/share/mariadb/mysql_performance_tables.sql /usr/share/mariadb/mysql_system_tables_data.sql /usr/share/mariadb/fill_help_tables.sql $initFile"
+      VAR_FINAL_COMMAND='echo "$(/bin/cat $bootstrapFiles | $VAR_FINAL_COMMAND)"' 
    fi
 fi
 if [ "$(isInsecure)" == "true" ]
