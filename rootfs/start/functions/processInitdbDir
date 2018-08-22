@@ -1,10 +1,16 @@
 processInitdbDir(){
-   initFile="$(/bin/mktemp)"
+   initFile="/usr/share/mariadb/mysql_test_db.sql"
+   > "$initFile"
+   /bin/chmod go= "$initFile"
    local filename=""
    local dbname=""
    local -
    set +f
-   set -- "/initdb/"*
+   if [ ! -z "$(/bin/ls -A /initdb)" ]
+   then
+      ls -sf /initdb/* /initmysql/
+   fi
+   set -- "/initmysql/"*
    while [ -f "$1" ]
    do
       filename="$(/usr/bin/basename "$1")"
@@ -25,6 +31,6 @@ processInitdbDir(){
       esac
       echo
       /bin/rm -f "$1"
-      set -- "/initdb/"*
+      set -- "/initmysql/"*
    done
 }
