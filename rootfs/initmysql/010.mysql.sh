@@ -10,7 +10,9 @@
 initMysql(){
    local prio="010"
    local dbname="mysql"
-   local sqlFile="/initdb/$prio.$dbname.sql"
+   local sqlFile="/initmysql/$prio.$dbname.sql"
+   /bin/touch "$sqlFile"
+   /bin/chmod go= "$sqlFile"
    local rootPw="$(makePwForUser root)"
    local userPw="$(makePwForUser $VAR_LINUX_USER)"
    /bin/cat << EOF > "$sqlFile"
@@ -25,7 +27,7 @@ EOF
    for db in $VAR_DATABASES
    do
       db="$(trim "$db")"
-      echo "CREATE DATABASE IF NOT EXISTS \`$db\` CHARACTER SET utf8 COLLATE utf8_general_ci;" >> "$sqlFile"
+      echo "CREATE DATABASE IF NOT EXISTS \`$db\` CHARACTER SET $VAR_param_character_set_server COLLATE $VAR_param_collation_server;" >> "$sqlFile"
       echo "GRANT ALL ON \`$db\`.* to '$VAR_LINUX_USER'@'%' IDENTIFIED BY '$userPw';" >> "$sqlFile"
       echo "GRANT ALL ON \`$db\`.* to '$VAR_LINUX_USER'@'localhost' IDENTIFIED BY '$userPw';" >> "$sqlFile"
    done
