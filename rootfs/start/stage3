@@ -5,24 +5,17 @@
 # VAR_*
 # All functions in /start/functions
 
+extraConfig="$(configFromVarGroup param noUnderscore2 | /usr/bin/awk '{print "--"$0}' | /usr/bin/tr '\n' ' ') --user=$VAR_LINUX_USER"
 if [ "$isFirstRun" == "true" ]
 then
    tryMakeFile "$VAR_param_socket" write
    if [ ! -s "$VAR_param_datadir/mysql" ]
    then
-      runCmd "/usr/bin/mysql_install_db --user=$VAR_LINUX_USER --datadir=$VAR_param_datadir"
       processInitdbDir
+      runCmd "/usr/bin/mysql_install_db $extraConfig"
    fi
-   tryDelete /initdb
 fi
 if [ "$(isInsecure)" == "true" ]
 then
    printSecurityWarning
 fi
-extraConfig="$(configFromVarGroup param noUnderscore2 | awk '{print "--"$0}')"
-if [ -n "$initFile" ]
-then
-   /bin/chown $VAR_LINUX_USER $initFile
-   extraConfig="$extraConfig --verbose --init-file=$initFile"
-fi
-   
