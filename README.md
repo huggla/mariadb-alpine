@@ -1,7 +1,7 @@
 **Note! I use Docker latest tag for development, which means that it isn't allways working. Date tags are stable.**
 
 # mariadb-alpine
-A small and secure Docker image of Mariadb (currently 10.3.8). Will execute .sh and .sql files located in /initdb when a new datastore is created.
+A small and secure Docker image of Mariadb (currently 10.3.9). Will execute .sh and .sql files located in /initdb when a new datastore is created.
 
 ## Environment variables
 ### pre-set runtime variables
@@ -11,9 +11,11 @@ A small and secure Docker image of Mariadb (currently 10.3.8). Will execute .sh 
 * VAR_LINUX_USER="mysql" (also owner/superuser for databases in VAR_DATABASES)
 * VAR_param_datadir="/mariadbdata"
 * VAR_param_socket="/run/mysqld/mysqld.sock"
+* VAR_param_character_set_server="utf8"
+* VAR_param_collation_server="utf8_general_ci"
 
 ### Optional runtime variables
-* VAR_param_&lt;mariadb parameter name, dashes replaced by underscores&gt;_&lt;
+* VAR_param_&lt;mariadb parameter name, dashes replaced by underscores&gt;
 * VAR_password_file_&lt;VAR_LINUX_USER&gt;
 * VAR_password_&lt;VAR_LINUX_USER&gt;
 * VAR_ENCRYPT_PW (set to "yes" to hash password with Argon2)
