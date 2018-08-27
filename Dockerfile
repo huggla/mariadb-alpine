@@ -1,5 +1,5 @@
 FROM huggla/mariadb:10.3.9 as stage1
-FROM huggla/alpine:20180713-edge as stage2
+FROM huggla/alpine as stage2
 
 USER root
 
@@ -15,7 +15,7 @@ RUN apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common.apk /maria
  && cd /rootfs/usr/bin \
  && ln -s ../local/bin/mysqld mysqld
 
-FROM huggla/alpine:20180713-edge
+FROM huggla/alpine
 
 COPY --from=stage2 /rootfs /
 
