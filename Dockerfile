@@ -25,3 +25,5 @@ ENV VAR_LINUX_USER="mysql" \
     VAR_param_collation_server="utf8_general_ci"
 
 USER starter
+
+ONBUILD USER root
