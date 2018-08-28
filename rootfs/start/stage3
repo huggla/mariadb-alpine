@@ -5,8 +5,6 @@
 # VAR_*
 # All functions in /start/functions
 
-/bin/cat /etc/sudoers.d/docker2
-
 extraConfig="$(configFromVarGroup param noUnderscore2 | /usr/bin/awk '{print "--"$0}' | /usr/bin/tr '\n' ' ') --user=$VAR_LINUX_USER"
 if [ "$isFirstRun" == "true" ]
 then
