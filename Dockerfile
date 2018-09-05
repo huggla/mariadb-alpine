@@ -1,15 +1,18 @@
 FROM huggla/mariadb:10.3.9 as stage1
 FROM huggla/alpine as stage2
 
+ARG APKS="mariadb mariadb-client mariadb-server-utils"
+
 COPY --from=stage1 /mariadb-apks /mariadb-apks
 COPY ./rootfs /rootfs 
 
 RUN mkdir -p /rootfs/lib/apk \
  && mv /lib/apk/db /rootfs/lib/apk/ \
  && ln -s /rootfs/lib/apk/db /lib/apk/ \
+ && echo /mariadb-apks >> /etc/apk/repositories \
  && apk info > /pre_apks.list \
- && apk --no-cache --allow-untrusted add /mariadb-apks/mariadb-common.apk /mariadb-apks/mariadb.apk /mariadb-apks/mariadb-client.apk /mariadb-apks/mariadb-server-utils.apk \
- && apk --no-cache add libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl ncurses-libs \
+ && apk --no-cache --allow-untrusted add $APKS \
+# && apk --no-cache add libgcc xz-libs libaio pcre libstdc++ libressl2.7-libcrypto libressl2.7-libssl ncurses-libs \
  && apk info > /post_apks.list \
  && apk manifest $(diff /pre_apks.list /post_apks.list | grep "^+[^+]" | awk -F + '{print $2}' | tr '\n' ' ') | awk -F "  " '{print $2;}' > /apks_files.list \
  && tar -cvp -f /apks_files.tar -T /apks_files.list -C / \
