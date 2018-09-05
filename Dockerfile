@@ -29,6 +29,7 @@ RUN find bin usr lib etc var home sbin root run srv -type d -print0 | sed -e 's|
 # && tar -xvp -f /apks_files.tar -C /rootfs/ \
  && mkdir -p /rootfs/initdb \
  && mv /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
+ && mv /rootfs/etc/my.cnf /rootfs/etc/my.cnf.off \
  && cd /rootfs/usr/bin \
  && ln -s ../local/bin/mysqld mysqld
 
