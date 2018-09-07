@@ -1,20 +1,20 @@
 FROM huggla/mariadb:10.3.9 as stage1
 FROM huggla/alpine as stage2
+FROM huggla/alpine-official as stage3
 
 ARG APKS="mariadb mariadb-client mariadb-server-utils"
 
 COPY --from=stage1 /mariadb-apks /mariadb-apks
+COPY --from=stage2 / /rootfs
 COPY ./rootfs /rootfs 
 
-RUN find bin usr lib etc var home sbin root run srv -type d -print0 | sed -e 's|^|/rootfs/|' | xargs -0 mkdir -p \
- && cp -a /lib/apk/db /rootfs/lib/apk/ \
- && cp -a /etc/apk /rootfs/etc/ \
- && cp -a /bin /sbin /rootfs/ \
- && cp -a /usr/bin /usr/sbin /rootfs/usr/ \
- && apk --no-cache --quiet info | xargs apk --quiet --no-cache --root /rootfs fix \
- && echo /mariadb-apks >> /etc/apk/repositories \
- && apk --no-cache --quiet --allow-untrusted --root /rootfs add $APKS \
- && rm /rootfs/usr/bin/sudo /rootfs/usr/bin/dash \
+RUN echo /mariadb-apks >> /etc/apk/repositories \
+ && apk info > /pre_apks.list \
+ && apk --no-cache --allow-untrusted add $APKS \
+ && apk info > /post_apks.list \
+ && apk manifest $(diff /pre_apks.list /post_apks.list | grep "^+[^+]" | awk -F + '{print $2}' | tr '\n' ' ') | awk -F "  " '{print $2;}' > /apks_files.list \
+ && tar -cvp -f /apks_files.tar -T /apks_files.list -C / \
+ && tar -xvp -f /apks_files.tar -C /rootfs/ \
  && mkdir -p /rootfs/initdb \
  && mv /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
  && mv /rootfs/etc/my.cnf /rootfs/etc/my.cnf.off \
@@ -23,7 +23,7 @@ RUN find bin usr lib etc var home sbin root run srv -type d -print0 | sed -e 's|
 
 FROM huggla/alpine
 
-COPY --from=stage2 /rootfs /
+COPY --from=stage3 /rootfs /
 
 ENV VAR_LINUX_USER="mysql" \
     VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
