@@ -11,7 +11,7 @@ processInitdbDir(){
       ls -sf /initdb/* /initmysql/
    fi
    set -- "/initmysql/"*
-   while [ -f "$1" ]
+   while [ -e "$1" ] && [ ! -d "$1" ]
    do
       filename="$(/usr/bin/basename "$1")"
       dbname=${filename%.*}
