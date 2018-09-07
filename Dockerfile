@@ -1,6 +1,6 @@
 FROM huggla/mariadb:10.3.9 as stage1
-FROM huggla/alpine as stage2
-FROM huggla/alpine-official as stage3
+FROM huggla/alpine:20180907-edge as stage2
+FROM huggla/alpine-official:20180907-edge as stage3
 
 ARG APKS="mariadb mariadb-client mariadb-server-utils"
 
@@ -21,7 +21,7 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
  && cd /rootfs/usr/bin \
  && ln -s ../local/bin/mysqld mysqld
 
-FROM huggla/alpine
+FROM huggla/alpine:20180907-edge
 
 COPY --from=stage3 /rootfs /
 
@@ -35,4 +35,3 @@ ENV VAR_LINUX_USER="mysql" \
 USER starter
 
 ONBUILD USER root
-
