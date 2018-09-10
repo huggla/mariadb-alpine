@@ -8,7 +8,7 @@ processInitdbDir(){
    set +f
    if [ ! -z "$(/bin/ls -A /initdb)" ]
    then
-      ls -sf /initdb/* /initmysql/
+      ln -sf /initdb/* /initmysql/
    fi
    set -- "/initmysql/"*
    while [ -e "$1" ] && [ ! -d "$1" ]
