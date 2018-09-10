@@ -2,7 +2,7 @@ FROM huggla/mariadb:10.3.9 as stage1
 FROM huggla/alpine as stage2
 FROM huggla/alpine-official as stage3
 
-ARG APKS="mariadb mariadb-client mariadb-server-utils"
+ARG APKS="mariadb mariadb-client mariadb-server-utils libressl2.7-libssl libressl2.7-libcrypto"
 
 COPY --from=stage1 /mariadb-apks /mariadb-apks
 COPY --from=stage2 / /rootfs
@@ -10,6 +10,8 @@ COPY ./rootfs /rootfs
 
 RUN echo /mariadb-apks >> /etc/apk/repositories \
  && apk info > /pre_apks.list \
+ && sed -i '/libressl2.7-libssl/d' /pre_apks.list \
+ && sed -i '/libressl2.7-libcrypto/d' /pre_apks.list \
  && apk --no-cache --allow-untrusted add $APKS \
  && apk info > /post_apks.list \
  && apk manifest $(diff /pre_apks.list /post_apks.list | grep "^+[^+]" | awk -F + '{print $2}' | tr '\n' ' ') | awk -F "  " '{print $2;}' > /apks_files.list \
