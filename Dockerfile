@@ -9,12 +9,12 @@ COPY --from=stage2 / /rootfs
 COPY ./rootfs /rootfs 
 
 RUN echo /mariadb-apks >> /etc/apk/repositories \
- && apk info > /pre_apks.list \
+ && apk --no-cache --quiet info > /pre_apks.list \
  && sed -i '/libressl2.7-libssl/d' /pre_apks.list \
  && sed -i '/libressl2.7-libcrypto/d' /pre_apks.list \
  && apk --no-cache --allow-untrusted add $APKS \
- && apk info > /post_apks.list \
- && apk manifest $(diff /pre_apks.list /post_apks.list | grep "^+[^+]" | awk -F + '{print $2}' | tr '\n' ' ') | awk -F "  " '{print $2;}' > /apks_files.list \
+ && apk --no-cache --quiet info > /post_apks.list \
+ && apk --no-cache --quiet manifest $(diff /pre_apks.list /post_apks.list | grep "^+[^+]" | awk -F + '{print $2}' | tr '\n' ' ') | awk -F "  " '{print $2;}' > /apks_files.list \
  && tar -cvp -f /apks_files.tar -T /apks_files.list -C / \
  && tar -xvp -f /apks_files.tar -C /rootfs/ \
  && mkdir -p /rootfs/initdb \
