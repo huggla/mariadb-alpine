@@ -23,7 +23,7 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
  && cd /rootfs/usr/bin \
  && ln -s ../local/bin/mysqld mysqld
 
-FROM huggla/alpine-official:20180907-edge
+FROM huggla/alpine:20180907-edge
 
 COPY --from=stage3 /rootfs /
 
