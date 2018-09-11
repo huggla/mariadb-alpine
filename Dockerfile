@@ -2,7 +2,7 @@ FROM huggla/mariadb:10.3.9 as stage1
 FROM huggla/alpine:20180907-edge as stage2
 FROM huggla/alpine-official:20180907-edge as stage3
 
-ARG APKS="mariadb mariadb-client mariadb-server-utils libressl2.7-libssl libressl2.7-libcrypto"
+ARG APKS="mariadb mariadb-client mariadb-server-utils libressl2.7-libssl libressl2.7-libcrypto libgcc xz-libs libaio pcre libstdc++ ncurses-libs"
 
 COPY --from=stage1 /mariadb-apks /mariadb-apks
 COPY --from=stage2 / /rootfs
