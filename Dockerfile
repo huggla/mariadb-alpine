@@ -1,7 +1,7 @@
 FROM huggla/mariadb:10.3.9 as stage1
 FROM huggla/alpine-slim:20180907-edge as stage2
 
-ARG APKS="mariadb libressl2.7-libcrypto libressl2.7-libssl libstdc++"
+ARG APKS="mariadb libressl2.7-libcrypto libressl2.7-libssl libstdc++ musl busybox alpine-baselayout alpine-keys libressl2.7-libtls ssl_client zlib apk-tools scanelf musl-utils libc-utils"
 
 COPY --from=stage1 /mariadb-apks /mariadb-apks
 COPY ./rootfs /rootfs 
