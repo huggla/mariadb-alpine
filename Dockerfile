@@ -13,6 +13,8 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
  && sed -i '/libressl2.7-libcrypto/d' /pre_apks.list \
  && sed -i '/libressl2.7-libssl/d' /pre_apks.list \
  && apk --no-cache --allow-untrusted add $APKS \
+ && apk --no-cache --quiet info > /apks.list \
+ && apk --no-cache --quiet manifest $(cat /apks.list | tr '\n' ' ') | awk -F "  " '{print $2;}' > /apks_files.list \
  && apk --no-cache --quiet info > /post_apks.list \
  && apk --no-cache --quiet manifest $(diff /pre_apks.list /post_apks.list | grep "^+[^+]" | awk -F + '{s=""; for (i=2; i < NF; i++) s = s $i "+"; print s $NF}' | tr '\n' ' ') | awk -F "  " '{print $2;}' > /apks_files.list \
  && tar -cvp -f /apks_files.tar -T /apks_files.list -C / \
