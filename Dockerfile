@@ -15,7 +15,8 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
  && mkdir -p /rootfs/initdb /rootfs/usr/local/bin \
  && mv /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/ \
  && cd /rootfs/usr/bin \
- && ln -s ../local/bin/mysqld mysqld
+ && ln -s ../local/bin/mysqld mysqld \
+ && cp -a /etc /rootfs/
 
 FROM huggla/alpine:20180907-edge
 
