@@ -8,7 +8,8 @@ COPY --from=stage1 /mariadb-apks /mariadb-apks
 COPY --from=stage2 / /rootfs
 COPY ./rootfs /rootfs 
 
-RUN apk --no-cache --allow-untrusted add $APKS \
+RUN echo /mariadb-apks >> /etc/apk/repositories \
+ && apk --no-cache --allow-untrusted add $APKS \
  && apk --no-cache --quiet manifest $APKS | awk -F "  " '{print $2;}' > /apks_files.list \
  && tar -cvp -f /apks_files.tar -T /apks_files.list -C / \
  && tar -xvp -f /apks_files.tar -C /rootfs/ \
