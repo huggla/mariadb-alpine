@@ -17,7 +17,8 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
  && apk --no-cache --quiet manifest $(diff /pre_apks.list /post_apks.list | grep "^+[^+]" | awk -F + '{s=""; for (i=2; i < NF; i++) s = s $i "+"; print s $NF}' | tr '\n' ' ') | awk -F "  " '{print $2;}' > /apks_files.list \
  && tar -cvp -f /apks_files.tar -T /apks_files.list -C / \
  && tar -xvp -f /apks_files.tar -C /rootfs/ \
- && mkdir -p /rootfs/initdb \
+ && mkdir -p /rootfs/initdb /rootfs/lib \
+ && cp -a /lib/apk /lib/apkslim /rootfs/lib/ \
  && mv /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
  && mv /rootfs/etc/my.cnf /rootfs/etc/my.cnf.off \
  && cd /rootfs/usr/bin \
