@@ -10,7 +10,8 @@ COPY ./rootfs /rootfs
 
 RUN echo /mariadb-apks >> /etc/apk/repositories \
  && apk --no-cache --allow-untrusted add $APKS \
- && apk --no-cache --quiet manifest $APKS | awk -F "  " '{print $2;}' > /apks_files.list \
+ && apk --no-cache --quiet info > /apks.list \
+ && apk --no-cache --quiet manifest $(cat /apks.list | tr '\n' ' ') | awk -F "  " '{print $2;}' > /apks_files.list \
  && tar -cvp -f /apks_files.tar -T /apks_files.list -C / \
  && tar -xvp -f /apks_files.tar -C /rootfs/ \
  && mkdir -p /rootfs/initdb \
