@@ -18,7 +18,7 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
 && mv /usr/bin/mysqld /usr/local/bin/ \
 && mv /etc/my.cnf /etc/my.cnf.off \
 && cd /usr/bin \
-&& ln -s ../local/bin/mysqld mysqld \
+&& ln -s ../local/bin/mysqld mysqld
 #&& cp -a /rootfs/* /
 #FROM huggla/base:20180907-edge
 #COPY --from=stage3 /rootfs /
