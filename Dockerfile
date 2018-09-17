@@ -18,13 +18,14 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
 && mv /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
 && mv /rootfs/etc/my.cnf /rootfs/etc/my.cnf.off \
 && cd /rootfs/usr/bin \
-&& ln -s ../local/bin/mysqld mysqld
-FROM huggla/base:20180907-edge
-COPY --from=stage3 /rootfs /
-COPY --from=stage3 /lib /lib
-COPY --from=stage3 /etc /etc
-COPY --from=stage3 /usr /usr
-COPY --from=stage3 /var /var
+&& ln -s ../local/bin/mysqld mysqld \
+&& cp -a /rootfs/* /
+#FROM huggla/base:20180907-edge
+#COPY --from=stage3 /rootfs /
+#COPY --from=stage3 /lib /lib
+#COPY --from=stage3 /etc /etc
+#COPY --from=stage3 /usr /usr
+#COPY --from=stage3 /var /var
 ENV VAR_LINUX_USER="mysql" \
 VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
 VAR_param_datadir="/mariadbdata" \
