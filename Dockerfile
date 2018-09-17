@@ -3,8 +3,8 @@ FROM huggla/base:20180907-edge as stage2
 FROM huggla/alpine-official:20180907-edge as stage3
 ARG APKS="mariadb libressl2.7-libcrypto libressl2.7-libssl libstdc++"
 COPY --from=stage1 /mariadb-apks /mariadb-apks
-COPY --from=stage2 / /rootfs
-COPY ./rootfs /rootfs
+#COPY --from=stage2 / /rootfs
+#COPY ./rootfs /rootfs
 RUN echo /mariadb-apks >> /etc/apk/repositories \
 && apk --no-cache --quiet info > /pre_apks.list \
 && sed -i '/libressl2.7-libcrypto/d' /pre_apks.list \
@@ -13,9 +13,9 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
 && apk --no-cache --quiet info > /post_apks.list \
 && apk --no-cache --quiet manifest $(diff /pre_apks.list /post_apks.list | grep "^+[^+]" | awk -F + '{s=""; for (i=2; i < NF; i++) s = s $i "+"; print s $NF}' | tr '\n' ' ') | awk -F "  " '{print $2;}' > /apks_files.list \
 && tar -cvp -f /apks_files.tar -T /apks_files.list -C / \
-&& tar -xvp -f /apks_files.tar -C /rootfs/ \
+#&& tar -xvp -f /apks_files.tar -C /rootfs/ \
 && mkdir -p /initdb \
-&& mv /usr/bin/mysqld /usr/local/bin/mysqld \
+&& mv /usr/bin/mysqld /usr/local/bin/ \
 && mv /etc/my.cnf /etc/my.cnf.off \
 && cd /usr/bin \
 && ln -s ../local/bin/mysqld mysqld \
