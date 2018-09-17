@@ -21,6 +21,8 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
 && ln -s ../local/bin/mysqld mysqld
 FROM huggla/base:20180907-edge
 COPY --from=stage3 /rootfs /
+COPY --from=stage3 /lib /lib
+COPY --from=stage3 /etc /etc
 ENV VAR_LINUX_USER="mysql" \
 VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
 VAR_param_datadir="/mariadbdata" \
