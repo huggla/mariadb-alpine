@@ -14,12 +14,12 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
 && apk --no-cache --quiet manifest $(diff /pre_apks.list /post_apks.list | grep "^+[^+]" | awk -F + '{s=""; for (i=2; i < NF; i++) s = s $i "+"; print s $NF}' | tr '\n' ' ') | awk -F "  " '{print $2;}' > /apks_files.list \
 && tar -cvp -f /apks_files.tar -T /apks_files.list -C / \
 && tar -xvp -f /apks_files.tar -C /rootfs/ \
-&& mkdir -p /rootfs/initdb \
-&& mv /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
-&& mv /rootfs/etc/my.cnf /rootfs/etc/my.cnf.off \
-&& cd /rootfs/usr/bin \
+&& mkdir -p /initdb \
+&& mv /usr/bin/mysqld /usr/local/bin/mysqld \
+&& mv /etc/my.cnf /etc/my.cnf.off \
+&& cd /usr/bin \
 && ln -s ../local/bin/mysqld mysqld \
-&& cp -a /rootfs/* /
+#&& cp -a /rootfs/* /
 #FROM huggla/base:20180907-edge
 #COPY --from=stage3 /rootfs /
 #COPY --from=stage3 /lib /lib
