@@ -12,7 +12,6 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
  && apk --no-cache --quiet manifest $(cat /apks.list) | awk -F "  " '{print $2;}' > /apks_files.list \
  && tar -cvp -f /apks_files.tar -T /apks_files.list -C / \
  && tar -xvp -f /apks_files.tar -C /rootfs/ \
- && rm -rf /rootfs/etc/my.cnf.d/* \
  && mkdir -p /rootfs/initdb /rootfs/usr/local/bin \
  && cp -a /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
  && cd /rootfs/usr/bin \
