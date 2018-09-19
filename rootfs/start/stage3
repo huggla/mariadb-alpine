@@ -9,6 +9,7 @@ extraConfig="$(configFromVarGroup param noUnderscore2 | /usr/bin/awk '{print "--
 if [ "$isFirstRun" == "true" ]
 then
    tryMakeFile "$VAR_param_socket" write
+   tryMakeFile "$VAR_param_tmpdir" write
    if [ ! -s "$VAR_param_datadir/mysql" ]
    then
       processInitdbDir
