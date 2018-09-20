@@ -5,7 +5,7 @@
 # VAR_*
 # All functions in /start/functions
 
-extraConfig="$(configFromVarGroup param noUnderscore2 | /usr/bin/awk '{print "--"$0}' | /usr/bin/tr '\n' ' ') --user=$VAR_LINUX_USER"
+extraConfig="$(configFromVarGroup param noUnderscore2 | /usr/bin/awk '{print "--"$0}' | /usr/bin/tr '\n' ' ')"
 if [ "$isFirstRun" == "true" ]
 then
    tryMakeFile "$VAR_param_socket" write
