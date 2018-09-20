@@ -27,7 +27,8 @@ ENV VAR_LINUX_USER="mysql" \
     VAR_param_tmpdir="/mariadbtmpdir" \
     VAR_param_socket="/run/mysqld/mysqld.sock" \
     VAR_param_character_set_server="utf8" \
-    VAR_param_collation_server="utf8_general_ci"
+    VAR_param_collation_server="utf8_general_ci" \
+    VAR_param_port="3306"
 
 USER starter
 
