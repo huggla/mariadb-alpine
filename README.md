@@ -13,6 +13,7 @@ A small and secure Docker image of Mariadb (currently 10.3.9). Will execute .sh 
 * VAR_param_socket="/run/mysqld/mysqld.sock"
 * VAR_param_character_set_server="utf8"
 * VAR_param_collation_server="utf8_general_ci"
+* VAR_param_port="3306"
 
 ### Optional runtime variables
 * VAR_param_&lt;mariadb parameter name, dashes replaced by underscores&gt;
