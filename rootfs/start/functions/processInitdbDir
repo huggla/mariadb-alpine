@@ -1,4 +1,7 @@
 processInitdbDir(){
+   initFile="/usr/share/mariadb/mysql_test_db.sql"
+   rm -f $initFile
+   tryMakeFile $initFile write
    local filename=""
    local dbname=""
    local -
