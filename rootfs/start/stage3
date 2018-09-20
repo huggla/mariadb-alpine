@@ -10,6 +10,7 @@ if [ "$isFirstRun" == "true" ]
 then
    tryMakeFile "$VAR_param_socket" write
    tryMakeDir "$VAR_param_tmpdir" write
+   tryMakeDir "$VAR_param_datadir" write
    if [ ! -s "$VAR_param_datadir/mysql" ]
    then
       processInitdbDir
