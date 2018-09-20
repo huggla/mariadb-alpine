@@ -13,7 +13,7 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
  && tar -cvp -f /apks_files.tar -T /apks_files.list -C / \
  && tar -xvp -f /apks_files.tar -C /rootfs/ \
  && mkdir -p /rootfs/initdb /rootfs/usr/local/bin \
- && rm -rf /etc/my.cnf.d/* /mariadb-apks \
+ && rm -rf /rootfs/etc/my.cnf.d/* /mariadb-apks \
  && cp -a /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
  && cd /rootfs/usr/bin \
  && ln -fs ../local/bin/mysqld mysqld
