@@ -1,5 +1,5 @@
 FROM huggla/mariadb:10.3.9 as stage1
-FROM huggla/alpine-slim:20180907-edge as stage2
+FROM huggla/alpine-slim as stage2
 
 ARG APKS="mariadb libressl2.7-libssl"
 
@@ -18,7 +18,7 @@ RUN echo /mariadb-apks >> /etc/apk/repositories \
  && cd /rootfs/usr/bin \
  && ln -fs ../local/bin/mysqld mysqld
 
-FROM huggla/base:20180907-edge
+FROM huggla/base
 
 COPY --from=stage2 /rootfs /
 
