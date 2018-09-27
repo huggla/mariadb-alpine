@@ -8,7 +8,7 @@ COPY ./rootfs /rootfs
 
 RUN echo /mariadb-apks >> /etc/apk/repositories \
  && apk --no-cache --allow-untrusted --root /rootfs add $APKS \
- && mkdir -p /rootfs/initdb /rootfs/usr/local/bin \
+ && mkdir -p /rootfs/initdb \
  && rm -rf /rootfs/etc/my.cnf.d/* /mariadb-apks \
  && cp -a /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
  && cd /rootfs/usr/bin \
