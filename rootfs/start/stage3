@@ -14,12 +14,7 @@ then
    if [ ! -s "$VAR_param_datadir/mysql" ]
    then
       processInitdbDir
-      echo '#!/usr/local/bin/dash' > /usr/local/bin/mysql_install_db
-      tail -n +2 /usr/bin/mysql_install_db >> /usr/local/bin/mysql_install_db
-      chown root:$VAR_LINUX_USER /usr/local/bin/mysql_install_db
-      chmod ug+x /usr/local/bin/mysql_install_db
-      runCmdAsLinuxUser "/usr/local/bin/mysql_install_db $extraConfig"
-      rm /usr/local/bin/mysql_install_db
+      runCmdAsLinuxUser "/usr/local/bin/mysql_install_db $extraConfig --user $VAR_LINUX_USER"
    fi
 fi
 if [ "$(isInsecure)" == "true" ]
