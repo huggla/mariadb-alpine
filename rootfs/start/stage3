@@ -14,7 +14,7 @@ then
    if [ ! -s "$VAR_param_datadir/mysql" ]
    then
       processInitdbDir
-      runCmdAsLinuxUser "/usr/local/bin/mysql_install_db $extraConfig --user $VAR_LINUX_USER"
+      runCmdAsLinuxUser "/usr/bin/mysql_install_db $extraConfig --user $VAR_LINUX_USER"
    fi
 fi
 if [ "$(isInsecure)" == "true" ]
