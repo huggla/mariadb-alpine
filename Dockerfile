@@ -1,7 +1,11 @@
-FROM huggla/mariadb:10.3.9 as stage2
-FROM huggla/alpine-slim as stage1
+FROM huggla/mariadb:10.3.9 as mariadb
+FROM huggla/busybox as init
 
-ARG APKS="mariadb libressl2.7-libssl"
+COPY --from=mariadb /mariadb-apks /mariadb-apks
+
+ARG ADDREPOS="/mariadb-apks"
+ARG RUNDEPS="libressl2.7-libssl"
+ARG RUNDEPS_UNTRUSTED="mariadb"
 
 COPY --from=stage2 /mariadb-apks /mariadb-apks
 COPY ./rootfs /rootfs 
