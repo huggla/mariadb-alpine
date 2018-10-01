@@ -6,19 +6,14 @@ COPY --from=mariadb /mariadb-apks /mariadb-apks
 ARG ADDREPOS="/mariadb-apks"
 ARG RUNDEPS="libressl2.7-libssl"
 ARG RUNDEPS_UNTRUSTED="mariadb"
+ARG BUILDCMDS=\
+"mkdir -p /rootfs/initdb "\
+"&& rm -rf /rootfs/etc/my.cnf.d/* /mariadb-apks "\
+"&& cp -a /imagefs/usr/bin/mysqld /imagefs/usr/local/bin/mysqld "\
+"&& cd /imagefs/usr/bin "\
+"&& ln -fs ../local/bin/mysqld mysqld"
 
-COPY --from=stage2 /mariadb-apks /mariadb-apks
-COPY ./rootfs /rootfs 
-
-RUN echo /mariadb-apks >> /etc/apk/repositories \
- && apk --no-cache --allow-untrusted --root /rootfs add $APKS \
- && mkdir -p /rootfs/initdb \
- && rm -rf /rootfs/etc/my.cnf.d/* /mariadb-apks \
- && cp -a /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
- && cd /rootfs/usr/bin \
- && ln -fs ../local/bin/mysqld mysqld
-
-FROM huggla/base
+FROM huggla/build
 
 ENV VAR_LINUX_USER="mysql" \
     VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
@@ -28,4 +23,4 @@ ENV VAR_LINUX_USER="mysql" \
     VAR_param_collation_server="utf8_general_ci" \
     VAR_param_port=3306
 
-ONBUILD USER root
+#ONBUILD USER root
