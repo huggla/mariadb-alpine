@@ -7,8 +7,8 @@ ARG ADDREPOS="/tmp/mariadb-apks"
 ARG RUNDEPS="libressl2.7-libssl"
 ARG RUNDEPS_UNTRUSTED="mariadb"
 ARG BUILDCMDS=\
-"mkdir -p /rootfs/initdb "\
-"&& rm -rf /rootfs/etc/my.cnf.d/* /tmp/mariadb-apks "\
+"mkdir -p /imagefs/initdb "\
+"&& rm -rf /imagefs/etc/my.cnf.d/* "\
 "&& cp -a /imagefs/usr/bin/mysqld /imagefs/usr/local/bin/mysqld "\
 "&& cd /imagefs/usr/bin "\
 "&& ln -fs ../local/bin/mysqld mysqld"
