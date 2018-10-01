@@ -1,5 +1,5 @@
 FROM huggla/mariadb:10.3.9 as mariadb
-FROM huggla/busybox as init
+FROM huggla/busybox:20180921-edge as init
 
 COPY --from=mariadb /mariadb-apks /mariadb-apks
 
