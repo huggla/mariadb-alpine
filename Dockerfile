@@ -15,6 +15,10 @@ COPY --from=mariadb /mariadb-apks /tmp/mariadb-apks
 
 FROM huggla/build as build
 
+FROM scratch
+
+COPY --from=build /imagefs /
+
 ENV VAR_LINUX_USER="mysql" \
     VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
     VAR_param_datadir="/mariadbdata" \
