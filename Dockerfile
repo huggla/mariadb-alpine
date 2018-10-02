@@ -1,8 +1,3 @@
-FROM huggla/mariadb:10.3.9 as mariadb
-FROM huggla/busybox:20180921-edge as init
-
-COPY --from=mariadb /mariadb-apks /tmp/mariadb-apks
-
 ARG ADDREPOS="/tmp/mariadb-apks"
 ARG RUNDEPS="libressl2.7-libssl"
 ARG RUNDEPS_UNTRUSTED="mariadb"
@@ -12,6 +7,11 @@ ARG BUILDCMDS=\
 "&& cp -a /imagefs/usr/bin/mysqld /imagefs/usr/local/bin/mysqld "\
 "&& cd /imagefs/usr/bin "\
 "&& ln -fs ../local/bin/mysqld mysqld"
+
+FROM huggla/mariadb:10.3.9 as mariadb
+FROM huggla/busybox:20180921-edge as init
+
+COPY --from=mariadb /mariadb-apks /tmp/mariadb-apks
 
 FROM huggla/build as build
 
