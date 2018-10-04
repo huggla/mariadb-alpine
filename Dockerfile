@@ -6,7 +6,7 @@ ARG REMOVEFILES="/etc/my.cnf.d/*"
 ARG EXECUTABLES="/usr/bin/mysqld"
 
 FROM huggla/mariadb:10.3.9 as mariadb
-FROM huggla/busybox:20180921-edge as init
+FROM huggla/busybox as init
 
 COPY --from=mariadb /mariadb-apks /tmp/mariadb-apks
 
