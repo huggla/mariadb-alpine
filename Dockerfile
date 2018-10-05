@@ -1,14 +1,9 @@
-ARG ADDREPOS="/tmp/mariadb-apks"
-ARG RUNDEPS="libressl2.7-libssl"
-ARG RUNDEPS_UNTRUSTED="mariadb"
+ARG RUNDEPS="mariadb"
 ARG MAKEDIRS="/initdb"
 ARG REMOVEFILES="/etc/my.cnf.d/*"
 ARG EXECUTABLES="/usr/bin/mysqld"
 
-FROM huggla/mariadb:10.3.9 as mariadb
 FROM huggla/busybox:20181005-edge as init
-
-COPY --from=mariadb /mariadb-apks /tmp/mariadb-apks
 
 FROM huggla/build:20181005-edge as build
 
