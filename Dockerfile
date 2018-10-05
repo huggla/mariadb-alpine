@@ -1,20 +1,18 @@
-FROM huggla/mariadb:10.3.9 as stage2
-FROM huggla/alpine-slim as stage1
+ARG ADDREPOS="/tmp/mariadb-apks"
+ARG RUNDEPS="libressl2.7-libssl"
+ARG RUNDEPS_UNTRUSTED="mariadb"
+ARG MAKEDIRS="/initdb"
+ARG REMOVEFILES="/etc/my.cnf.d/*"
+ARG EXECUTABLES="/usr/bin/mysqld"
 
-ARG APKS="mariadb libressl2.7-libssl"
+FROM huggla/mariadb:10.3.9 as mariadb
+FROM huggla/busybox as init
 
-COPY --from=stage2 /mariadb-apks /mariadb-apks
-COPY ./rootfs /rootfs 
+COPY --from=mariadb /mariadb-apks /tmp/mariadb-apks
 
-RUN echo /mariadb-apks >> /etc/apk/repositories \
- && apk --no-cache --allow-untrusted --root /rootfs add $APKS \
- && mkdir -p /rootfs/initdb \
- && rm -rf /rootfs/etc/my.cnf.d/* /mariadb-apks \
- && cp -a /rootfs/usr/bin/mysqld /rootfs/usr/local/bin/mysqld \
- && cd /rootfs/usr/bin \
- && ln -fs ../local/bin/mysqld mysqld
+FROM huggla/build as build
 
-FROM huggla/base
+FROM huggla/base as image
 
 ENV VAR_LINUX_USER="mysql" \
     VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
