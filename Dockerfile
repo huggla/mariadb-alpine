@@ -6,13 +6,13 @@ ARG REMOVEFILES="/etc/my.cnf.d/*"
 ARG EXECUTABLES="/usr/bin/mysqld"
 
 FROM huggla/mariadb:10.3.9 as mariadb
-FROM huggla/busybox as init
+FROM huggla/busybox:20181005-edge as init
 
 COPY --from=mariadb /mariadb-apks /tmp/mariadb-apks
 
-FROM huggla/build as build
+FROM huggla/build:20181005-edge as build
 
-FROM huggla/base as image
+FROM huggla/base:20181005-edge as image
 
 ENV VAR_LINUX_USER="mysql" \
     VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
