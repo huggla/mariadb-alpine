@@ -4,7 +4,7 @@ ARG REMOVEFILES="/etc/my.cnf.d/*"
 ARG EXECUTABLES="/usr/bin/mysqld"
 
 FROM huggla/busybox:20181017-edge as init
-FROM huggla/build:20181017-edge as build
+FROM huggla/build as build
 FROM huggla/base as image
 
 ENV VAR_LINUX_USER="mysql" \
