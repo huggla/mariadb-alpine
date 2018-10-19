@@ -3,7 +3,7 @@ ARG MAKEDIRS="/initdb"
 ARG REMOVEFILES="/etc/my.cnf.d/*"
 ARG EXECUTABLES="/usr/bin/mysqld"
 
-FROM huggla/busybox:20181017-edge as init
+FROM huggla/init:20181017-edge as init
 FROM huggla/build as build
 FROM huggla/base as image
 
