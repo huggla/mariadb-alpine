@@ -3,9 +3,14 @@ ARG MAKEDIRS="/initdb"
 ARG REMOVEFILES="/etc/my.cnf.d/*"
 ARG EXECUTABLES="/usr/bin/mysqld"
 
-FROM huggla/init:20181017-edge as init
+#---------------Don't edit----------------
+FROM ${CONTENTIMAGE1:-scratch} as content1
+FROM ${CONTENTIMAGE2:-scratch} as content2
+FROM ${BASEIMAGE:-huggla/base} as base
 FROM huggla/build as build
-FROM huggla/base as image
+FROM ${BASEIMAGE:-huggla/base} as image
+COPY --from=build /imagefs /
+#-----------------------------------------
 
 ENV VAR_LINUX_USER="mysql" \
     VAR_FINAL_COMMAND="/usr/local/bin/mysqld \$extraConfig" \
@@ -15,4 +20,7 @@ ENV VAR_LINUX_USER="mysql" \
     VAR_param_collation_server="utf8_general_ci" \
     VAR_param_port=3306
 
+#---------------Don't edit----------------
+USER starter
 ONBUILD USER root
+#-----------------------------------------
