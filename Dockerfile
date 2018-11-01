@@ -1,3 +1,4 @@
+ARG TAG="20181101-edge"
 ARG RUNDEPS="mariadb"
 ARG MAKEDIRS="/initdb"
 ARG REMOVEFILES="/etc/my.cnf.d/*"
@@ -6,9 +7,9 @@ ARG EXECUTABLES="/usr/bin/mysqld"
 #---------------Don't edit----------------
 FROM ${CONTENTIMAGE1:-scratch} as content1
 FROM ${CONTENTIMAGE2:-scratch} as content2
-FROM ${BASEIMAGE:-huggla/base} as base
-FROM huggla/build as build
-FROM ${BASEIMAGE:-huggla/base} as image
+FROM ${BASEIMAGE:-huggla/base:$TAG} as base
+FROM huggla/build:$TAG as build
+FROM ${BASEIMAGE:-huggla/base:$TAG} as image
 COPY --from=build /imagefs /
 #-----------------------------------------
 
