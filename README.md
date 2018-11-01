@@ -23,7 +23,7 @@ A small and secure Docker image of Mariadb (currently 10.3.9). Will execute .sh 
 * VAR_DATABASES (comma separated list of databases to create when a new datastore is created)
 
 ## Capabilities
-Can drop all but CHOWN, DAC_OVERRIDE, FOWNER, SETGID and SETUID.
+Can drop all but SETPCAP, SETGID and SETUID.
 
 ## Tips
 Check also out huggla/mariadb-backup.
