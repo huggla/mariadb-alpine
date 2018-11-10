@@ -1,4 +1,4 @@
-ARG TAG="20181101-edge"
+ARG TAG="20181108-edge"
 ARG RUNDEPS="mariadb"
 ARG MAKEDIRS="/initdb"
 ARG REMOVEFILES="/etc/my.cnf.d/*"
