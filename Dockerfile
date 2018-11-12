@@ -1,7 +1,7 @@
 ARG TAG="20181108-edge"
 ARG RUNDEPS="mariadb"
 ARG MAKEDIRS="/initdb"
-ARG REMOVEFILES="/etc/my.cnf.d/*"
+ARG REMOVEFILES="/etc/my.cnf*"
 ARG EXECUTABLES="/usr/bin/mysqld"
 
 #---------------Don't edit----------------
