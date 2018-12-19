@@ -1,7 +1,7 @@
-**Note! I use Docker latest tag for development, which means that it isn't allways working. Date tags are stable.**
-
 # mariadb-alpine
 A small and secure Docker image of Mariadb (currently 10.3.10). Will execute .sh and .sql files located in /initdb when a new datastore is created.
+
+20181204: Mariadb 10.3.10, Alpine Edge
 
 ## Environment variables
 ### pre-set runtime variables
